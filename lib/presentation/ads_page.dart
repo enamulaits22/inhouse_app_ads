@@ -9,9 +9,14 @@ import 'package:flutter/services.dart';
 import '../inhouse_app_ads.dart';
 
 class AdsPage extends StatelessWidget {
-  const AdsPage({super.key, required this.state});
+  const AdsPage({
+    super.key,
+    required this.state,
+    required this.primaryColor,
+  });
 
   final InAppAdsSupabaseModelResponse state;
+  final Color primaryColor;
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +41,12 @@ class AdsPage extends StatelessWidget {
           ),
           systemOverlayStyle: SystemUiOverlayStyle(
             systemNavigationBarColor: Colors.white,
-            statusBarColor: Colors.orange.shade700,
+            statusBarColor: primaryColor,
           ),
           titleSpacing: 0,
           elevation: 0,
           excludeHeaderSemantics: true,
-          backgroundColor: Colors.orange.shade700,
+          backgroundColor: primaryColor,
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -99,7 +104,7 @@ class AdsPage extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () => _launchAppUrlLink(state),
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange.shade700,
+                            backgroundColor: primaryColor,
                             elevation: 0,
                             textStyle: const TextStyle(
                               fontSize: 20,
