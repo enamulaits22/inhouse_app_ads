@@ -44,6 +44,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AdsService {
   /// Initializes the AdsService with Supabase credentials.
+  ///
+  AdsService._();
+  static AdsService instance = AdsService._();
+
   Future<void> initAds({
     required String supabaseUrl,
     required String supabaseKey,
