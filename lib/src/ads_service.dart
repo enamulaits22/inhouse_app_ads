@@ -59,8 +59,8 @@ class AdsService {
   SupabaseClient get _supabaseClient => Supabase.instance.client;
 
   //:::::::::::::::::::::::::: GET Ads Data from Supabase:::::::::::::::::::::::
-  Future<String> getAdsData() async {
-    const String tableName = 'chatgpt_config';
+  Future<String> getAdsData({required String supabaseTableName}) async {
+    final String tableName = supabaseTableName;
     String apiKey = '';
     try {
       final data = await _supabaseClient.from(tableName).select();
