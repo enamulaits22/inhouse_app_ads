@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../data/inAppAdsSupabaseModelResponse.dart';
+
 /// Flutter package to seamlessly integrate and display in-house app ads sourced from Supabase.
 ///
 /// This package provides a straightforward solution for developers to incorporate advertisements within their Flutter applications while leveraging Supabase as the backend for ad data management.
@@ -62,19 +64,28 @@ class AdsService {
   /// Getter method to access the SupabaseClient instance.
   SupabaseClient get _supabaseClient => Supabase.instance.client;
 
-  //:::::::::::::::::::::::::: GET Ads Data from Supabase:::::::::::::::::::::::
-  Future<String> getAdsData({required String supabaseTableName}) async {
-    final String tableName = supabaseTableName;
-    String apiKey = '';
+  //:::::::::::::::::::: GET Data from Supabase ::::::::::::::::::::::
+  Future<List<InAppAdsSupabaseModelResponse>>
+      getAdsModeListFromSupabase() async {
+    const String tableName = 'audacity_apps_ads';
+    List<InAppAdsSupabaseModelResponse> dataList = [];
+
     try {
-      final data = await _supabaseClient.from(tableName).select();
-      apiKey = data.first['apiKey'];
-      log('✅✅✅ $apiKey');
-    } catch (e) {
-      log(e.toString());
-      apiKey = 'not found!';
-      log('[❌❌❌ ERROR] {apiKey: $apiKey}');
+      final response = await _supabaseClient
+          .from(tableName)
+          .select()
+          .order('id', ascending: true);
+
+      dataList = response
+          .map((e) => InAppAdsSupabaseModelResponse.fromJson(e))
+          .toList();
+
+      return dataList;
+    } catch (e, st) {
+      log('[❌❌❌ ERROR] ${e.toString()}');
+      log('[❌❌❌ ERROR] $st');
+      // chatRoleInfo = [];
     }
-    return apiKey;
+    return dataList;
   }
 }
