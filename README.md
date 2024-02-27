@@ -1,39 +1,66 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+#inhouse_app_ads
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+A Flutter package for showing the In House Product Ads of Audacity It Solutions Ltd.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- Can be used for showing the product ads of the Audacity It Solutions Ltd.
+- No need to import Supabase and its dependencies
+- No need to create the Response/Model class for Supabase response
+- By clicking on the ads item will be redirected to the AppStore(for IOS) or PlayStore(for Android)
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+1. Add the `inhouse_app_ads` package to your `pubspec.yaml`
+
+    ```dart
+      inhouse_app_ads:
+         git:
+         url: https://github.com/enamulaits22/inhouse_app_ads.git
+         ref: main
+    ```
+
+2. Import `inhouse_app_ads`.
+    ```dart
+    import 'package:inhouse_app_ads/inhouse_app_ads.dart';
+    ```
+
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+1. Initialize `inhouse_app_ads` before using it
+    ```dart
+    import 'package:inhouse_app_ads/inhouse_app_ads.dart';
 
-```dart
-const like = 'sample';
-```
+    void main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+   
+   // Add this
+   await AdsService.instance.initAds(
+    url: SUPABASE_URL,
+    anonKey: SUPABASE_ANON_KEY,
+    );
+    
+    runApp(MyApp());
+    }
+    ```
+2. Call the `getAdsModeListFromSupabase()` method to get the list of `InAppAdsSupabaseModelResponse` instances, this will return `List<InAppAdsSupabaseModelResponse>` instances
+    ```dart
+    final supabase = AdsService.instance;
+    final List<InAppAdsSupabaseModelResponse> data = await supabase.getAdsModeListFromSupabase();
+    ```
+3. There has a default implementation for UI `AdsPage`, where there need to pass the `InAppAdsSupabaseModelResponse` class instance and a `Primary color` for UI
+    ```dart
+    class MyAdsPage extends StatelessWidget {
+    const MyAdsPage({super.key});
+    
+    @override
+    Widget build(BuildContext context) {
+    return AdsPage(
+    state: inAppAdsSupabaseModelResponseInstance,
+    primaryColor: primaryColor,
+    );
+    }
+    }
+    ```
 
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
