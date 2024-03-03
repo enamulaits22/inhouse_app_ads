@@ -218,12 +218,11 @@ class _AnimatedButton extends StatefulWidget {
 }
 
 class _AnimatedButtonState extends State<_AnimatedButton> {
-  late double opacityLevel;
+  double opacityLevel = 0;
 
   @override
   void initState() {
     super.initState();
-    opacityLevel = 0.0;
     Timer(Duration(seconds: widget.duration), () {
       _changeOpacity();
     });
